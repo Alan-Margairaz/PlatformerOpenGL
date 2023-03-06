@@ -109,7 +109,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>External\GLFW\lib-vc2022\glfw3.lib\glew32.lib;opengl32.lib;glu32.lib;External\GLEW\lib\Release\x64;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(CoreLibraryDependencies);glu32.lib;opengl32.lib;C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\External\GLEW\lib\Release\x64\glew32.lib;C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\External\GLFW\lib-vc2022\glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

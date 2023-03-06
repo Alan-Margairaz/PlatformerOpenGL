@@ -1,0 +1,19 @@
+﻿  Camera.cpp
+  main.cpp
+C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\PlatformerOpenGL\Platformer3D\Platformer\main.cpp(134,36): warning C4267: 'initialisation' : conversion de 'size_t' en 'int', perte possible de données
+C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\PlatformerOpenGL\Platformer3D\Platformer\main.cpp(160,114): warning C4267: 'argument' : conversion de 'size_t' en 'GLsizei', perte possible de données
+  Mesh.cpp
+  OBJLoader.cpp
+  Shader.cpp
+  VBOIndexer.cpp
+main.obj : error LNK2001: symbole externe non résolu __imp_glClear
+main.obj : error LNK2001: symbole externe non résolu __imp_glEnable
+main.obj : error LNK2001: symbole externe non résolu __imp_glClearColor
+main.obj : error LNK2001: symbole externe non résolu __imp_glDisable
+main.obj : error LNK2001: symbole externe non résolu __imp_glDepthFunc
+Mesh.obj : error LNK2001: symbole externe non résolu __imp_glBindTexture
+Mesh.obj : error LNK2001: symbole externe non résolu __imp_glGenTextures
+Mesh.obj : error LNK2001: symbole externe non résolu __imp_glTexParameteri
+Mesh.obj : error LNK2001: symbole externe non résolu __imp_glDeleteTextures
+Mesh.obj : error LNK2001: symbole externe non résolu __imp_glTexImage2D
+C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\PlatformerOpenGL\Platformer3D\x64\Release\Platformer.exe : fatal error LNK1120: 10 externes non résolus
