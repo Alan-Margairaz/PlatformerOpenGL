@@ -1,2 +1,2 @@
 # PlatformerOpenGL
-Plateformer 3D fait avec OpenGL
+Mini-platformer 3D made with OpenGL.
