@@ -1,7 +1,5 @@
-﻿  Camera.cpp
+﻿  Mesh.cpp
+C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\PlatformerOpenGL\Platformer3D\Platformer\Mesh.cpp(215,2): warning C4267: 'argument' : conversion de 'size_t' en 'GLsizei', perte possible de données
   main.cpp
-C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\PlatformerOpenGL\Platformer3D\Platformer\main.cpp(112,50): error C2440: '<function-style-cast>' : impossible de convertir de 'initializer list' en 'Camera'
-C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\PlatformerOpenGL\Platformer3D\Platformer\main.cpp(112,50): message : Aucun constructeur n'a pu prendre le type de source, ou la résolution de la surcharge du constructeur était ambiguë
-C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\PlatformerOpenGL\Platformer3D\Platformer\main.cpp(112,16): error C2512: 'Camera' : aucun constructeur par défaut approprié disponible
-C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\PlatformerOpenGL\Platformer3D\Platformer\Camera.h(9,7): message : voir la déclaration de 'Camera'
   Génération de code en cours...
+  Platformer.vcxproj -> C:\Users\Utilisateur\Desktop\Cours_Ynov\OpenGL\PlatformerOpenGL\Platformer3D\x64\Debug\Platformer.exe

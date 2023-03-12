@@ -9,18 +9,28 @@
 class Camera
 {
 private:
-	glm::vec3 cameraPos, direction, right, up, playerXAxis, playerYAxis;
+	glm::vec3 cameraPos, right, up, velocity;
 	glm::mat4 viewMatrix;
-	float speed, horizontalAngle, verticalAngle, rotationSpeed, gravity, velocity, playerVelocityX, playerVelocityY;
+	float speed, horizontalAngle, verticalAngle, rotationSpeed, jumpSpeed, jumpHeight;
 	double lastTime;
+	bool isJumping, isDescending;
 
 
 public:
-	Camera(float Speed, float RotationSpeed, double LastTime, float gravity, float velocity, float playerVelocityX, float playerVelocityY);
+	Camera(float Speed, float RotationSpeed, double LastTime);
 	~Camera();
 
-	glm::mat4 getView();
-	void moveCamera(GLFWwindow* window);
-	glm::vec3 getPos();
+	void PlayerMovements(GLFWwindow* window);
+	void PlayerJump(float deltaTime);
+	void MoveCamera(GLFWwindow* window);
+	glm::mat4 GetView();
+	glm::vec3 GetCameraPos();
+	glm::vec3 direction;
+
+	/*
+	Tests de meilleurs jumps, sans succès:
+	void UpdatedJump();	
+	void Jump();
+	*/
 };
 

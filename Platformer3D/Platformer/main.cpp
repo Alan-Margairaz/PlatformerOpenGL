@@ -6,6 +6,8 @@
 #include "VBOIndexer.h"
 
 GLFWwindow* window;
+std::vector<Mesh> meshes;
+glm::mat4 projection, view;
 
 int main()
 {
@@ -13,7 +15,6 @@ int main()
 	if (!glfwInit())
 	{
 		fprintf(stderr, "Failed to initialize GLFW\n");
-		return -1;
 	}
 
 	glfwWindowHint(GLFW_SAMPLES, 4); // Antialiasing 4x (4 fragment dans un pixel)
@@ -25,7 +26,7 @@ int main()
 	window = glfwCreateWindow(1024, 768, "C++ Jeux 3D - OpenGL", NULL, NULL);
 	if (window == NULL)
 	{
-		fprintf(stderr, "Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
+		fprintf(stderr,"Failed to open GLFW window. If you have an Intel GPU, they are not 3.3 compatible. Try the 2.1 version of the tutorials.\n");
 		glfwTerminate();
 		return -1;
 	}
@@ -40,20 +41,24 @@ int main()
 		return -1;
 	}
 
-	// Permet d'utiliser la touche Echap
+	// Permet d'utiliser la touche Echap:
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
-	// Fond d'écran Bleu-Noir
-	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
+
+	// Fond d'écran (couleur bleu ciel):
+	glClearColor(.4667f, .7098f, .9961f, 0.0f);
+
 
 	// Active le test de profondeur
 	glEnable(GL_DEPTH_TEST);
 
-	// Accepte le fragment s'il est plus proche de la caméra que le pr c dent accept 
+	// Accepte le fragment s'il est plus proche de la caméra que le précédent fragment accepté 
 	glDepthFunc(GL_LESS);
+
 
 	// Crée et compile notre programme GLSL à partir des shaders
 	GLuint programID = LoadShaders("VertexShader.vert", "FragmentShader.frag");
+
 
 	// Une couleur pour chaque sommet. Elles ont été générées aléatoirement. 
 	GLfloat g_color_buffer_data_cube[] = {
@@ -95,37 +100,41 @@ int main()
 	0.982f,  0.099f,  0.879f
 	};
 
-	// Initialisation de lightColor
-	glm::vec3 lightColor = glm::vec3(1.0f);
+
+	// Initialisation de lightColor et lightPos:
 	GLuint lightColorID = glGetUniformLocation(programID, "lightColor");
-
-	// Initialisation de lightPos
-	glm::vec3 lightPos = glm::vec3(10.0f, 10.0f, 10.0f);
+	glm::vec3 lightColor = glm::vec3(1.0f);
 	GLuint lightPosID = glGetUniformLocation(programID, "lightPos");
+	glm::vec3 lightPos = glm::vec3(10.0f, 10.0f, 10.0f);
 
-	Mesh mesh1 = Mesh();
-	mesh1.CreateMesh(g_color_buffer_data_cube, "cube.obj", "container.jpg", 108, programID);
-
-	Mesh mesh2 = Mesh();
-	mesh2.CreateMesh(g_color_buffer_data_cube, "podium.obj", "container.jpg", 108, programID);
-
+	// Initialisation de la caméra:
 	Camera camera = Camera(3.0f, 1.0f, glfwGetTime());
-	glm::vec3 viewPos = camera.getPos();
+	glm::vec3 viewPos = camera.GetCameraPos();
+	view = camera.GetView();
 
-	// Initialisation de viewPos
-	GLuint viewPosID = glGetUniformLocation(programID, "viewPos");
-
-	mesh1.UpdateMVP(glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f), camera.getView());
-	mesh2.UpdateMVP(glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f), camera.getView());
-
-	// Matrice de projection : Champ de vision de 45 °C, ration 4:3, distance d'affichage : 0.1 unités <-> 100 unités 
+	// Matrice de projection : Champ de vision de 45 °C, ratio 4:3, distance d'affichage : 0.1 unités <-> 100 unités 
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
 
+	// Initialisation des meshs contenus dans la scène:
+	Mesh mesh1 = Mesh(glm::vec3(0,0,0), programID);
+	mesh1.CreateMesh(g_color_buffer_data_cube, "Objects/cube.obj", "Objects/container.jpg", sizeof(g_color_buffer_data_cube), programID, projection, view);
+	Mesh mesh2 = Mesh(glm::vec3(-1,0,-1), programID);
+	mesh1.CreateMesh(g_color_buffer_data_cube, "Objects/cube.obj", "Objects/container.jpg", sizeof(g_color_buffer_data_cube), programID, projection, view);
+	Mesh mesh3 = Mesh(glm::vec3(2, 0, 2), programID);
+	mesh1.CreateMesh(g_color_buffer_data_cube, "Objects/cube.obj", "Objects/container.jpg", sizeof(g_color_buffer_data_cube), programID, projection, view);
+
+	// Initialisation de viewPos:
+	GLuint viewPosID = glGetUniformLocation(programID, "viewPos");
+
+	// Appel de la fonction qui update la matrice MVP:
+	mesh1.UpdateMVP(glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f), camera.GetView());
+	mesh2.UpdateMVP(glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f), camera.GetView());
+	mesh3.UpdateMVP(glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f), camera.GetView());
 
 	// Initialisation du vector contenant plusieurs Mesh:
-	std::vector<Mesh> meshes;
 	meshes.push_back(mesh1);
 	meshes.push_back(mesh2);
+	meshes.push_back(mesh3);
 
 	do
 	{
@@ -135,22 +144,22 @@ int main()
 		// Utilise notre shader
 		glUseProgram(programID);
 
-		camera.moveCamera(window);
-
-		viewPos = camera.getPos();
-
+		// Initialisation de mouvements de personnage/caméra:
+		viewPos = camera.GetCameraPos();	// Update position caméra
+		camera.MoveCamera(window);			// Update mouvement caméra
+		camera.PlayerMovements(window);		// Mouvement personnage, comprend le saut
 
 		glUniform3fv(lightPosID, 1, &lightPos[0]);
 		glUniform3fv(viewPosID, 1, &viewPos[0]);
 		glUniform3fv(lightColorID, 1, &lightColor[0]);
 
-		// (Draw des meshs mises en place dans un vector avec pushback possible)
+		view = camera.GetView();
+
 		for (int i = 0; i < meshes.size(); i++)
 		{
-			meshes[i].UpdateMVP(glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f), camera.getView());
+			meshes[i].UpdateMVP(glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f),camera.GetView());
 			meshes[i].Draw(window, programID);
 		}
-		
 
 		//  Echange les tampons
 		glfwSwapBuffers(window);
